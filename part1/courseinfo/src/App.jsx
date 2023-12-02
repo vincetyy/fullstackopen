@@ -5,7 +5,6 @@ const Header = (props) => {
     </div>
 
   )
-
 }
 
 const Part = (props) => {
