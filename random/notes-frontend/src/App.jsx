@@ -1,21 +1,8 @@
 import { useState, useEffect } from 'react'
 import Note from './components/Note'
 import Notification from './components/Notification'
+import Footer from './components/Footer'
 import noteService from './services/notes'
-
-const Footer = () => {
-  const footerStyle = {
-    color: 'green',
-    fontStyle: 'italic',
-    fontSize: 16
-  }
-  return (
-    <div style={footerStyle}>
-      <br />
-      <em>Note app, Department of Computer Science, University of Helsinki 2023</em>
-    </div>
-  )
-}
 
 const App = () => {
   const [notes, setNotes] = useState([])
@@ -28,6 +15,7 @@ const App = () => {
       .getAll()
       .then(initialNotes => {
         setNotes(initialNotes)
+        console.log(initialNotes);
       })
   }, [])
 
@@ -55,7 +43,7 @@ const App = () => {
         .then(returnedNote => {
         setNotes(notes.map(note => note.id !== id ? note : returnedNote))
       })
-      .catch(error => {
+      .catch(() => {
         setErrorMessage(
           `Note '${note.content}' was already removed from server`
         )
@@ -69,9 +57,9 @@ const App = () => {
     setNewNote(event.target.value)
   }
 
-  const notesToShow = showAll
-    ? notes
-    : notes.filter(note => note.important)
+  const notesToShow = showAll ? notes : notes.filter(note => note.important)
+
+  
 
   return (
     <div>
@@ -97,7 +85,7 @@ const App = () => {
           onChange={handleNoteChange}
         />
         <button type="submit">save</button>
-      </form> 
+      </form>
       <Footer />
     </div>
   )
