@@ -4,13 +4,33 @@ const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
 
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+
 const Blog = require('../models/blog')
+const User = require('../models/user')
+
+let token
 
 beforeEach(async () => {
+  await User.deleteMany({})
+
+  const passwordHash = await bcrypt.hash('sekret', 10)
+  const user = new User({ username: 'root', passwordHash })
+
+  await user.save()
+
+  const userForToken = {
+    username: user.username,
+    id: user._id
+  }
+
+  token = jwt.sign(userForToken, process.env.SECRET)
+
   await Blog.deleteMany({})
 
   const blogObjects = helper.initialBlogs
-    .map(blog => new Blog(blog))
+    .map(blog => new Blog({ ...blog, user: user._id }))
   const promiseArray = blogObjects.map(blog => blog.save())
   await Promise.all(promiseArray)
 })
@@ -19,18 +39,23 @@ describe('when there is initially some blogs saved', () => {
   test('blogs are returned as json', async () => {
     await api
       .get('/api/blogs')
+      .set('Authorization', `Bearer ${token}`)
       .expect(200)
       .expect('Content-Type', /application\/json/)
   })
 
   test('all blogs are returned', async () => {
-    const response = await api.get('/api/blogs')
+    const response = await api
+      .get('/api/blogs')
+      .set('Authorization', `Bearer ${token}`)
 
     expect(response.body).toHaveLength(helper.initialBlogs.length)
   })
 
   test('blogs has property id', async () => {
-    const response = await api.get('/api/blogs')
+    const response = await api
+      .get('/api/blogs')
+      .set('Authorization', `Bearer ${token}`)
 
     expect(response.body[0].id).toBeDefined()
   })
@@ -48,10 +73,13 @@ describe('addition of new blog', () => {
     await api
       .post('/api/blogs')
       .send(newBlog)
+      .set('Authorization', `Bearer ${token}`)
       .expect(201)
       .expect('Content-Type', /application\/json/)
 
-    const response = await api.get('/api/blogs')
+    const response = await api
+      .get('/api/blogs')
+      .set('Authorization', `Bearer ${token}`)
 
     const titles = response.body.map(r => r.title)
 
@@ -72,6 +100,7 @@ describe('addition of new blog', () => {
     await api
       .post('/api/blogs')
       .send(newBlog)
+      .set('Authorization', `Bearer ${token}`)
       .expect(201)
       .expect('Content-Type', /application\/json/)
 
@@ -93,6 +122,7 @@ describe('addition of new blog', () => {
     await api
       .post('/api/blogs')
       .send(newBlog)
+      .set('Authorization', `Bearer ${token}`)
       .expect(400)
 
     const blogsAtEnd = await helper.blogsInDb()
@@ -111,11 +141,31 @@ describe('addition of new blog', () => {
     await api
       .post('/api/blogs')
       .send(newBlog)
+      .set('Authorization', `Bearer ${token}`)
       .expect(400)
 
     const blogsAtEnd = await helper.blogsInDb()
 
     expect(blogsAtEnd.length).toBe(helper.initialBlogs.length)
+  })
+
+  test('fails with status code 401 if no token', async () => {
+    const newBlog = {
+      title: 'CS (Full Stack)',
+      author: 'VTYY',
+      url: 'http://google.com',
+      likes: 9,
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(401)
+    
+    const blogsAtEnd =  await helper.blogsInDb()
+
+    expect(blogsAtEnd.length).toBe(helper.initialBlogs.length)
+
   })
 })
 
@@ -127,6 +177,7 @@ describe('deletion of a blog', () => {
     await api
       .delete(`/api/blogs/${blogToDelete.id}`)
       .expect(204)
+      .set('Authorization', `Bearer ${token}`)
 
     const blogsAtEnd = await helper.blogsInDb()
 
@@ -148,6 +199,7 @@ describe('updating of a blog', () => {
     await api
       .put(`/api/blogs/${blogToUpdate.id}`)
       .send(blogToUpdate)
+      .set('Authorization', `Bearer ${token}`)
 
     const blogsAtEnd = await helper.blogsInDb()
 
