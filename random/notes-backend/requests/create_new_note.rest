@@ -1,10 +1,16 @@
-GET http://localhost:3001/api/notes/
+POST http://localhost:3001/api/login
+Content-Type: application/json
 
+{
+    "username": "vtyy",
+    "password": "vtyy"
+}
 ###
-POST http://localhost:3001/api/notes/ HTTP/1.1
+POST http://localhost:3001/api/notes/
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZ0eXkiLCJpZCI6IjY1NzY3Y2MyYTkyYjQ4OWJhZTU0ZTIwYyIsImlhdCI6MTcwMjI2ODE4MH0.6IqtZ0QTuRuWR57aDChTDAqgPh7aGmxFnmiBbfxFU4o
 
 {
     "content": "sample",
-    "important": "Wed, 21 Oct 2015 18:27:50 GMT"
+    "important": true
 }
