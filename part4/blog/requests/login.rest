@@ -31,12 +31,12 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3003/api/blogs/65773bacb63874b21224326e
+DELETE http://localhost:3003/api/blogs/65773d7b8503fa4c5850dd99
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbSIsImlkIjoiNjU3NzNhZGNjNzVmYTliZmZhNjlmZWQxIiwiaWF0IjoxNzAyMzEyNzAxfQ.v_Q9WGqOmlN87xquqVd2JICPZuAfvy-AYTSiHCV-OYk
 
 ###
 
-DELETE http://localhost:3003/api/blogs/65773bacb63874b21224326e
+DELETE http://localhost:3003/api/blogs/65773d7b8503fa4c5850dd99
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZ0eXkiLCJpZCI6IjY1NzZjNTljNjVmZGUyOTZkNmQ5N2IyMyIsImlhdCI6MTcwMjI4NDA4MH0.k9Y1gxD0_99iov-FFWhFLuPGU3vOIbQ_U04lfkvpwzY
