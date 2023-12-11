@@ -6,3 +6,14 @@ Content-Type: application/json
     "name": "Vince",
     "password": "vtyy"
 }
+
+###
+
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+    "username": "sam",
+    "name": "Samuel",
+    "password": "sam"
+}

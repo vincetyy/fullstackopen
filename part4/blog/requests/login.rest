@@ -13,8 +13,30 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZ0eXkiLCJpZCI6IjY1NzZjNTljNjVmZGUyOTZkNmQ5N2IyMyIsImlhdCI6MTcwMjI4NDA4MH0.k9Y1gxD0_99iov-FFWhFLuPGU3vOIbQ_U04lfkvpwzY
 
 {
-  "title": "Type wars 4",
+  "title": "Type wars 9",
   "author": "Robert C. Martin",
   "url": "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
   "likes": "100"
 }
+
+###
+
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+  "username": "sam",
+  "password": "sam"
+}
+
+###
+
+DELETE http://localhost:3003/api/blogs/65773bacb63874b21224326e
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbSIsImlkIjoiNjU3NzNhZGNjNzVmYTliZmZhNjlmZWQxIiwiaWF0IjoxNzAyMzEyNzAxfQ.v_Q9WGqOmlN87xquqVd2JICPZuAfvy-AYTSiHCV-OYk
+
+###
+
+DELETE http://localhost:3003/api/blogs/65773bacb63874b21224326e
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZ0eXkiLCJpZCI6IjY1NzZjNTljNjVmZGUyOTZkNmQ5N2IyMyIsImlhdCI6MTcwMjI4NDA4MH0.k9Y1gxD0_99iov-FFWhFLuPGU3vOIbQ_U04lfkvpwzY
