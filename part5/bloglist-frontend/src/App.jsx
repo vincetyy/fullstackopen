@@ -51,7 +51,6 @@ const App = () => {
           .concat(returnedBlog)
           .sort((firstItem, secondItem) => secondItem.likes - firstItem.likes)
         )
-        
         notifyWith(`A new blog ${blogObject.title} by ${blogObject.author} added`, 'info')
       })
       .catch(error => {
@@ -117,9 +116,9 @@ const App = () => {
     try {
       window.localStorage.removeItem('loggedBlogappUser')
       setUser(null)
-      notifyWith(`Logged out`, 'info')
+      notifyWith('Logged out', 'info')
     } catch (exception) {
-      notifyWith(`Cannot log out, try again`, 'info')
+      notifyWith('Cannot log out, try again', 'info')
     }
   }
 
@@ -176,8 +175,6 @@ const App = () => {
       <Notification info={info} />
       {user === null && loginForm()}
       {user !== null && blogForm()}
-
-      
     </div>
   )
 }

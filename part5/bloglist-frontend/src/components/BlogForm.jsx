@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from 'react'
 
 const BlogForm = ({ createBlog, user }) => {
   const [newTitle, setNewTitle] = useState('')
@@ -22,7 +22,6 @@ const BlogForm = ({ createBlog, user }) => {
 
   return (
     <div>
-      
       <h2>Create New</h2>
       <form onSubmit={addBlog}>
         <div>
