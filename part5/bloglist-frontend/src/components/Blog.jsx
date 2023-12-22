@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const Blog = ({ blog , updateBlog, removeBlog, user }) => {
+const Blog = ({ blog, updateBlog, removeBlog, user }) => {
 
   const [showDetails, setShowDetails] = useState(false)
 
@@ -30,36 +30,38 @@ const Blog = ({ blog , updateBlog, removeBlog, user }) => {
     border: 'solid',
     borderWidth: 1,
     marginBottom: 5,
-    display: showDetails ? 'none' : ''
-  }
-
-  const blogStyleDetails = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5,
-    display: showDetails ? '' : 'none'
   }
 
   return (
     <div>
-      <div style={blogStyle} >
-        {blog.title} {blog.author}
-        <button onClick={toggleDetails}>Show</button>
+      {!showDetails && <div style={blogStyle} >
+        <div id='titleAndAuthor'>
+          {blog.title}
+          {blog.author}
+          <button onClick={toggleDetails}>Show</button>
+        </div>
       </div>
-      <div style={blogStyleDetails} >
-        {blog.title} {blog.author}
-        <button onClick={toggleDetails}>Hide</button>
-        <br></br>
-        {blog.url}
-        <br></br>
-        Likes {blog.likes}
-        <button onClick={addLikes}>Like</button>
-        <br></br>
-        {blog.user.name}
-        { blog.user.username === user.username && <button onClick={deleteBlog}>Delete</button> }
+      }
+
+      {showDetails && <div style={blogStyle} >
+        <div id='titleAndAuthor'>
+          {blog.title}
+          {blog.author}
+          <button onClick={toggleDetails}>Hide</button>
+        </div>
+        <div id='url'>
+          {blog.url}
+        </div>
+        <div id='likes'>
+          Likes {blog.likes}
+          <button onClick={addLikes}>Like</button>
+        </div>
+        <div>
+          {blog.user.name}
+        </div>
+        {blog.user.username === user.username && <button onClick={deleteBlog}>Delete</button>}
       </div>
+      }
     </div>
 
   )
