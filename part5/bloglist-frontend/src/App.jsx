@@ -123,10 +123,11 @@ const App = () => {
   }
 
   const loginForm = () => (
-    <form onSubmit={handleLogin}>
+    <form id='loginForm' onSubmit={handleLogin}>
       <div>
         Username
         <input
+          id="username"
           type="text"
           value={username}
           name="Username"
@@ -136,13 +137,14 @@ const App = () => {
       <div>
         Password
         <input
+          id="password"
           type="password"
           value={password}
           name="Password"
           onChange={({ target }) => setPassword(target.value)}
         />
       </div>
-      <button type="submit">Login</button>
+      <button id="login-button" type="submit">Login</button>
     </form>
 
   )
@@ -158,10 +160,11 @@ const App = () => {
       <Togglable buttonLabel='Create new blog' ref={blogFormRef}>
         <BlogForm createBlog={createBlog} user={user} />
       </Togglable>
-
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} updateBlog={updateBlog} removeBlog={removeBlog} user={user} />
-      )}
+      <div>
+        {blogs.map(blog =>
+          <Blog key={blog.id} blog={blog} updateBlog={updateBlog} removeBlog={removeBlog} user={user} />
+        )}
+      </div>
     </div>
   )
 
